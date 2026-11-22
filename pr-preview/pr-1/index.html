@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bilanzen-Simulator</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <h1>Bilanzen-Simulator</h1>
+      <p>Geld ist eine Buchung: Jede Zahlung verändert mehrere Bilanzen gleichzeitig.
+        <a class="source" href="https://github.com/flonix8/BilanzenSimulator-NG" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Quellcode
+        </a>
+      </p>
+    </div>
+    <nav id="tabs" class="tabs" aria-label="Spiel wählen"></nav>
+  </header>
+
+  <main class="layout">
+    <aside class="panel controls-panel" aria-label="Aktionen">
+      <div id="mission"></div>
+      <div id="controls"></div>
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+      <details class="settings">
+        <summary>Einstellungen</summary>
+        <label class="check"><input type="checkbox" id="animate"> Neue Transaktion Schritt für Schritt abspielen</label>
+        <label class="field">
+          <span>Tempo <output id="speedOut"></output></span>
+          <input type="range" id="speed" min="0.3" max="3" step="0.1">
+        </label>
+        <div class="row-buttons">
+          <button type="button" id="undo">Letzte Transaktion löschen</button>
+          <button type="button" id="reset" class="danger">Spiel zurücksetzen</button>
+        </div>
+      </details>
+    </aside>
+
+    <section class="stage" aria-label="Bilanzen">
+      <div class="player" id="player">
+        <div class="player-buttons">
+          <button type="button" data-nav="start" title="Zum Start (Pos1)" aria-label="Zum Start">⏮</button>
+          <button type="button" data-nav="prevTx" title="Vorherige Transaktion (Umschalt + ←)" aria-label="Vorherige Transaktion">⏪</button>
+          <button type="button" data-nav="prev" title="Schritt zurück (←)" aria-label="Schritt zurück">◁</button>
+          <button type="button" data-nav="play" id="play" class="play" title="Abspielen / Pause (Leertaste)" aria-label="Abspielen">▶</button>
+          <button type="button" data-nav="next" title="Schritt vor (→)" aria-label="Schritt vor">▷</button>
+          <button type="button" data-nav="nextTx" title="Nächste Transaktion (Umschalt + →)" aria-label="Nächste Transaktion">⏩</button>
+          <button type="button" data-nav="end" title="Zum aktuellen Stand (Ende)" aria-label="Zum Ende">⏭</button>
+        </div>
+        <div class="player-pos" id="posLabel"></div>
+        <input type="range" id="scrub" min="0" max="0" value="0" aria-label="Zeitpunkt">
+        <div class="strip" id="strip"></div>
+      </div>
+
+      <div class="board-wrap" id="boardWrap">
+        <div id="board" class="board"></div>
+        <svg id="links" class="links" aria-hidden="true"></svg>
+      </div>
+
+      <div class="legend">
+        <span><i class="sw inv"></i>beteiligt an der Transaktion</span>
+        <span><i class="sw up"></i>Zunahme in diesem Schritt</span>
+        <span><i class="sw down"></i>Abnahme in diesem Schritt</span>
+        <span><i class="sw ln"></i>zusammengehörige Buchungen</span>
+        <span><i class="sw flow"></i>Geldstrom</span>
+        <span><i class="sw goods"></i>Güter / Leistung</span>
+        <span class="tip">Tipp: Maus über ein Konto zeigt sein Gegenstück in anderen Bilanzen.</span>
+      </div>
+    </section>
+
+    <aside class="panel story-panel" aria-label="Erklärung">
+      <section id="story" class="story"></section>
+      <section class="history-box">
+        <h2>Verlauf</h2>
+        <ol id="history" class="history"></ol>
+      </section>
+    </aside>
+  </main>
+
+  <script src="js/engine.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/scenario-transfer.js"></script>
+  <script src="js/scenario-staat.js"></script>
+  <script src="js/scenario-kreislauf.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
