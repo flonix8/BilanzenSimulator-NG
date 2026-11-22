@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bilanzen-Simulator</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <h1>Bilanzen-Simulator</h1>
+      <p>Geld ist eine Buchung: Jede Zahlung verändert mehrere Bilanzen gleichzeitig.</p>
+    </div>
+    <nav id="tabs" class="tabs" aria-label="Spiel wählen"></nav>
+  </header>
+
+  <main class="layout">
+    <aside class="panel controls-panel" aria-label="Aktionen">
+      <div id="mission"></div>
+      <div id="controls"></div>
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+      <details class="settings">
+        <summary>Einstellungen</summary>
+        <label class="check"><input type="checkbox" id="animate"> Neue Transaktion Schritt für Schritt abspielen</label>
+        <label class="field">
+          <span>Tempo <output id="speedOut"></output></span>
+          <input type="range" id="speed" min="0.3" max="3" step="0.1">
+        </label>
+        <div class="row-buttons">
+          <button type="button" id="undo">Letzte Transaktion löschen</button>
+          <button type="button" id="reset" class="danger">Spiel zurücksetzen</button>
+        </div>
+      </details>
+    </aside>
+
+    <section class="stage" aria-label="Bilanzen">
+      <div class="player" id="player">
+        <div class="player-buttons">
+          <button type="button" data-nav="start" title="Zum Start (Pos1)" aria-label="Zum Start">⏮</button>
+          <button type="button" data-nav="prevTx" title="Vorherige Transaktion (Umschalt + ←)" aria-label="Vorherige Transaktion">⏪</button>
+          <button type="button" data-nav="prev" title="Schritt zurück (←)" aria-label="Schritt zurück">◁</button>
+          <button type="button" data-nav="play" id="play" class="play" title="Abspielen / Pause (Leertaste)" aria-label="Abspielen">▶</button>
+          <button type="button" data-nav="next" title="Schritt vor (→)" aria-label="Schritt vor">▷</button>
+          <button type="button" data-nav="nextTx" title="Nächste Transaktion (Umschalt + →)" aria-label="Nächste Transaktion">⏩</button>
+          <button type="button" data-nav="end" title="Zum aktuellen Stand (Ende)" aria-label="Zum Ende">⏭</button>
+        </div>
+        <div class="player-pos" id="posLabel"></div>
+        <input type="range" id="scrub" min="0" max="0" value="0" aria-label="Zeitpunkt">
+        <div class="strip" id="strip"></div>
+      </div>
+
+      <div class="board-wrap" id="boardWrap">
+        <div id="board" class="board"></div>
+        <svg id="links" class="links" aria-hidden="true"></svg>
+      </div>
+
+      <div class="legend">
+        <span><i class="sw inv"></i>beteiligt an der Transaktion</span>
+        <span><i class="sw up"></i>Zunahme in diesem Schritt</span>
+        <span><i class="sw down"></i>Abnahme in diesem Schritt</span>
+        <span><i class="sw ln"></i>zusammengehörige Buchungen</span>
+        <span><i class="sw flow"></i>Geldstrom</span>
+        <span><i class="sw goods"></i>Güter / Leistung</span>
+        <span class="tip">Tipp: Maus über ein Konto zeigt sein Gegenstück in anderen Bilanzen.</span>
+      </div>
+    </section>
+
+    <aside class="panel story-panel" aria-label="Erklärung">
+      <section id="story" class="story"></section>
+      <section class="history-box">
+        <h2>Verlauf</h2>
+        <ol id="history" class="history"></ol>
+      </section>
+    </aside>
+  </main>
+
+  <script src="js/engine.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/scenario-transfer.js"></script>
+  <script src="js/scenario-staat.js"></script>
+  <script src="js/scenario-kreislauf.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
